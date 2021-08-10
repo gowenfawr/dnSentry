@@ -40,8 +40,8 @@ dnSentry requires:
 The dnSentry files need to be placed under the configuration directory for PowerDNS Recursor.  On Debian/Ubuntu systems, this is `/etc/powerdns`.  On RHEL/CentOS/Fedora systems, this is `/etc/pdns-recursor`.  Whichever `$DIR` your system uses, create `$DIR/dnSentry` and copy the files there.
 
     root@dnsserver:/etc/powerdns/dnSentry# ls
-    conf2code.lua  dnSentry.lua  domains.lua  license.txt
-    dnSentry.conf  dnTree.lua    dumper.lua
+    conf2code.lua  dnSentry.lua  domains.lua  LICENSE
+    dnSentry.conf  dnTree.lua    dumper.lua   README.md
 
 ## Create dnSentry configuration
 
