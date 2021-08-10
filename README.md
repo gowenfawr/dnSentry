@@ -32,7 +32,7 @@ The alternative - an allowlist based DNS firewall - is impractical for, say, use
 ## Prerequisites
 
 dnSentry requires:
- - PowerDNS Recursor 4.2+
+ - [PowerDNS Recursor](https://repo.powerdns.com/) 4.2+
  - Lua 5.1+
 
 ## File placement
