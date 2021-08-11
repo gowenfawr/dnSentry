@@ -78,7 +78,14 @@ Now edit the `$DIR/recursor.conf` file and specify that PowerDNS should run the 
     #
     lua-dns-script=/etc/powerdns/dnSentry/dnSentry.lua
 
+By default, PowerDNS Recursor will listen to localhost (127.0.0.1:53).  If you're setting this up as a secure resolver for other machines, then you need to listen to a public interface.  That setting `local-address` is also in the `recursor.conf` file; set it to your IP address.
 
+    #################################
+    # local-address IP addresses to listen on, separated by spaces or commas. Also accepts ports.
+    #
+    local-address=10.10.1.15
+
+Then on any machines that you're protecting with dnSentry, update `/etc/resolv.conf` to point at this server, e.g., `nameserver 10.10.1.15` in this example.
 
 
 ## Restart PowerDNS Recursor
