@@ -78,7 +78,9 @@ Now edit the `$DIR/recursor.conf` file and specify that PowerDNS should run the 
     #
     lua-dns-script=/etc/powerdns/dnSentry/dnSentry.lua
 
-By default, PowerDNS Recursor will listen to localhost (127.0.0.1:53).  If you're setting this up as a secure resolver for other machines, then you need to listen to a public interface.  That setting `local-address` is also in the `recursor.conf` file; set it to your IP address.
+By default, PowerDNS Recursor will listen to localhost (127.0.0.1).  If you're only testing locally, you would put `nameserver 127.0.0.1` in `/etc/resolv.conf` to force testing, or you can specify the server used when testing with `host`/`nslookup`/`dig`.  
+
+dnSentry protects best as a secure resolver for other machines, however, and in that case you need to listen to a public interface.  That setting `local-address` is also in the `recursor.conf` file; set it to your IP address.
 
     #################################
     # local-address IP addresses to listen on, separated by spaces or commas. Also accepts ports.
@@ -94,8 +96,6 @@ Then on any machines that you're protecting with dnSentry, update `/etc/resolv.c
     root@dnsserver:/etc/powerdns# tail -1 /var/log/syslog
     Aug  9 23:25:27 dnsserver pdns_recursor[2277]: Loaded 'lua' script from '/etc/powerdns/dnSentry/dnSentry.lua'
 
-
-
 ## <a name="test-some-queries"></a>Test some queries
 
 Given the example config file, you should be able to query the following servers successfully, but all other domains should fail to resolve.
@@ -110,6 +110,14 @@ Given the example config file, you should be able to query the following servers
     www.catalogupdate.microsoft.com.nsatc.net has address 52.184.220.82
     root@dnsserver:~# host -t a cnn.com
     Host cnn.com not found: 3(NXDOMAIN)
+    
+If you want to test without changing the system resolver in `/etc/resolv.conf`, you can specify the server to query using `host`/`nslookup`/`dig`:
+
+    root@dnsserver:~# host www.google.com localhost
+    ...
+    root@dnsserver:~# nslookup www.google.com localhost
+    ...
+    root@dnsserver:~# dig www.google.com @localhost
 
 # <a name="logging"></a>Logging
 
@@ -122,6 +130,8 @@ Here is what `dnSentry` logged for those test queries:
     Aug  9 23:32:42 dnsserver pdns_recursor[2682]: dnSentry=BLOCK client=127.0.0.1 name=cnn.com. qtype=1
     root@dnsserver:~#
 
+Monitoring the logs and alerting on BLOCK messages acts both as an early detector that a malicious party is on your server, and as a way to ensure that legitimate functionality isn't being blocked by mistake.  Take the time to review these alerts to keep everything running smoothly.  Most production machines are very limited and predictable in their DNS activity, so alerts will hopefully be rare and valuable.
+
 # <a name="known-errors"></a>Known Errors
 
 ## <a name="empty-domains.lua"></a>Empty domains.lua
@@ -132,7 +142,7 @@ If the `domains.lua` file is empty, the logs will contain errors that say `attem
 
 ## <a name="novel-dir"></a>Novel $DIR
 
-If you install `dnSentry` in a `$DIR` other than the usual /etc/powerdns and /etc/pdns-recursor, PowerDNS Recursor startup will fail, complaining about `#011no file`.
+If you install `dnSentry` in a `$DIR` other than the usual `/etc/powerdns` and `/etc/pdns-recursor`, PowerDNS Recursor startup will fail, complaining about `#011no file`.
 
     Aug  9 23:51:12 dnsserver systemd[1]: Started PowerDNS Recursor.
     Aug  9 23:51:12 dnsserver pdns_recursor[6094]: Done priming cache with root hints
