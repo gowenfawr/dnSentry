@@ -132,6 +132,8 @@ Here is what `dnSentry` logged for those test queries:
 
 Monitoring the logs and alerting on BLOCK messages acts both as an early detector that a malicious party is on your server, and as a way to ensure that legitimate functionality isn't being blocked by mistake.  Take the time to review these alerts to keep everything running smoothly.  Most production machines are very limited and predictable in their DNS activity, so alerts will hopefully be rare and valuable.
 
+Please note that a given query will only log if it isn't cached.  Once a query is cached, it won't log again until the cache for that entry expires.  For queries that BLOCK, that seems to last for an hour.  If you're searching the logs, be sure to use a wide enough search window to catch when an initial BLOCK might have happened.
+
 # <a name="known-errors"></a>Known Errors
 
 ## <a name="empty-domains.lua"></a>Empty domains.lua
