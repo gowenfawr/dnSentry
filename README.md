@@ -26,7 +26,7 @@ DNS exfiltration is one of the hardest routes to block.  Because DNS servers wil
 
 Traditional blocklisting DNS firewalls like RPZ assume that traffic is good unless it's specifically blocked.  But it's impossible to proactively block all bad domains, especially if a bad actor is willing to set up a new domain solely to use against you.
 
-The alternative - an allowlist based DNS firewall - is impractical for, say, user workstations, where web browsing will generate requests for an endless variety of DNS domains.  But protected servers, which are already isolated onto secure networks by traditional firewalls, have less need for random DNS activity.  The number of domains they need to query is small and predictable.  Blocking DNS activity by default will increase their security without cost to functionality.
+The alternative - an allowlist based DNS firewall - is impractical for, say, user workstations, where web browsing will generate requests for an endless variety of DNS domains.  But protected servers, which are already isolated onto secure networks by traditional firewalls, have less need for random DNS activity.  The number of domains they need to query is small and predictable.  Blocking DNS activity by default, while allowing legitimate queries, will increase their security without cost to functionality.
 
 # <a name="installation"></a>Installation
 ## <a name="prerequisites"></a>Prerequisites
