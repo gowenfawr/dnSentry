@@ -32,7 +32,7 @@ The alternative - an allowlist based DNS firewall - is impractical for, say, use
 ## <a name="prerequisites"></a>Prerequisites
 
 dnSentry requires:
- - [PowerDNS Recursor](https://repo.powerdns.com/) 4.2+
+ - [PowerDNS Recursor](https://repo.powerdns.com/) 4.3+ (4.2 works but is EOL)
  - Lua 5.1+
 
 ## <a name="file-placement"></a>File placement
