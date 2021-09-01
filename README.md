@@ -16,6 +16,7 @@
  - [Logging](#logging)
  - [Known errors](#known-errors)
 	 - [Empty domains.lua](#empty-domains.lua)
+	 - [Syntax error](#syntax-error)
 	 - [Novel $DIR](#novel-dir)
 
 # <a name="why"></a>Why?
@@ -141,6 +142,14 @@ If the `domains.lua` file is empty, the logs will contain errors that say `attem
 
     Aug  9 23:39:26 dnsserver pdns_recursor[3174]: STL error (cnn.com/A from 127.0.0.1:57824): [string "chunk"]:27: attempt to index local 'tref' (a nil value)
     Aug  9 23:39:32 dnsserver pdns_recursor[3174]: STL error (cnn.com/A from 127.0.0.1:57824): [string "chunk"]:27: attempt to index local 'tref' (a nil value)
+
+## <a name="syntax-error"></a>Syntax error
+
+If a syntax error in the Lua is introduced - most commonly, by hand-editing the domains.lua configuration file - then PowerDNS will refuse to start, and will log an error like the following:
+
+    Sep  1 18:27:03 guest pdns_recursor[55259]: Failed to load 'lua' script from '/etc/powerdns/dnSentry/dnSentry.lua': error loading module 'domains' from file '/etc/powerdns/dnSentry/domains.lua':
+
+For this reason it is recommended to make configuration changes using the dnSentry.conf file and the conf2code.lua script, rather than by hand.
 
 ## <a name="novel-dir"></a>Novel $DIR
 
